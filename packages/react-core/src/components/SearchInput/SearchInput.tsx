@@ -83,6 +83,8 @@ export interface SearchInputProps extends Omit<React.HTMLProps<HTMLDivElement>, 
   isAdvancedSearchOpen?: boolean;
   /** Flag indicating if search input is disabled. */
   isDisabled?: boolean;
+  /** Flag indicating if search input is right aligned */
+  isRightAligned?: boolean;
   /** Flag indicating if the next navigation button is disabled. */
   isNextNavigationButtonDisabled?: boolean;
   /** Flag indicating if the previous navigation button is disabled. */
@@ -143,6 +145,7 @@ const SearchInputBase: React.FunctionComponent<SearchInputProps> = ({
   onClear,
   onToggleAdvancedSearch,
   isAdvancedSearchOpen = false,
+  isRightAligned = false,
   resultsCount,
   onNextClick,
   onPreviousClick,
@@ -306,6 +309,7 @@ const SearchInputBase: React.FunctionComponent<SearchInputProps> = ({
         name={name}
         inputId={searchInputId}
         inputProps={inputProps}
+        // isRightAligned={isRightAligned}
       />
       {(renderUtilities || areUtilitiesDisplayed) && (
         <TextInputGroupUtilities>
@@ -347,6 +351,7 @@ const SearchInputBase: React.FunctionComponent<SearchInputProps> = ({
       variant={ButtonVariant.plain}
       aria-label={toggleAriaLabel}
       aria-expanded={isExpanded}
+      className={isExpanded ? 'pf-m-close-search' : 'pf-m-open-search'}
       icon={isExpanded ? <TimesIcon /> : <SearchIcon />}
       onClick={onExpandHandler}
       ref={searchInputExpandableToggleRef}
@@ -355,7 +360,9 @@ const SearchInputBase: React.FunctionComponent<SearchInputProps> = ({
 
   const buildExpandableSearchInput = ({ ...searchInputProps } = {}) => (
     <InputGroup {...searchInputProps}>
-      <InputGroupItem isFill>{buildTextInputGroup()} </InputGroupItem>
+      <InputGroupItem isFill className="pf-v6-c-search-input">
+        {buildTextInputGroup()}
+      </InputGroupItem>
       <InputGroupItem isPlain>{expandableToggle}</InputGroupItem>
     </InputGroup>
   );
@@ -413,7 +420,8 @@ const SearchInputBase: React.FunctionComponent<SearchInputProps> = ({
   if (!!expandableInput && !isExpanded) {
     return (
       <InputGroup {...searchInputProps}>
-        <InputGroupItem>{expandableToggle}</InputGroupItem>
+        <InputGroupItem className="pf-v6-c-search-input">{buildTextInputGroup()} </InputGroupItem>
+        <InputGroupItem className="pf-m-expand-search-button">{expandableToggle}</InputGroupItem>
       </InputGroup>
     );
   }

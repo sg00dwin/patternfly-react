@@ -37,6 +37,8 @@ import { ExternalLinkSquareAltIcon } from '@patternfly/react-icons';
 
 ### With expandable button
 
+The expandable search component expands, via the `scale` attribute, from left to right. Pass  ing the prop `isRightAligned` will update the `transition-origin` so that it expands from right to left.
+
 ```ts file='./SearchInputWithExpandable.tsx'
 ```
 
